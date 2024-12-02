@@ -442,6 +442,14 @@
 
       if (result.status === "success") {
         alert("ההזמנה נשלחה בהצלחה!");
+        document.getElementById('customer-name').value = '';
+        document.getElementById('customer-number').value = '';
+        document.getElementById('customer-email').value = '';
+        document.getElementById('note').value = '';
+
+      // Clear the book list
+        books.length = 0;
+        updateBookList();  // Refresh the book list UI
       } else {
         alert("שגיאה בעת שליחת ההזמנה: " + result.message);
       }
