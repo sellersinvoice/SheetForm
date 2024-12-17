@@ -510,6 +510,10 @@
     // Step 2: Collect book orders
     const order = books.map(book => ({
       name: book.name,
+      size: book.size[0],
+      nusach:book.nusach[0],
+      bookNote:book.bookNote,
+      nameIngrave:book.ingrave[0,1],
       styles: book.styles.map(style => ({
         color: style.color,
         style: style.style,
