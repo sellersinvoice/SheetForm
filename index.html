@@ -24,13 +24,42 @@
     .container {
       max-width: 800px;
       margin: 20px auto;
-      background-color: lightgrey;
-      background:rgba(225, 224, 224, 0.8);
-      color: black;
+      background: rgba(255, 255, 255, 0.05); /* Nearly invisible background */
+      border-radius: 20px;
+      border: 2px solid rgba(255, 255, 255, 0.3); /* Crisper border for sharpness */
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3), inset 0 0 50px rgba(255, 255, 255, 0.1); /* Adds glow from within */
+      backdrop-filter: blur(0px);
+      color: white;
       padding: 20px;
+      overflow: hidden;
       border-radius: 10px;
-      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
     }
+    .container::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle at top left, rgba(255, 255, 255, 0.6), rgba(255, 255, 255, 0) 60%);
+            opacity: 0.4; /* Slightly stronger reflection */
+            pointer-events: none; /* Makes it non-interactive */
+            transform: rotate(-15deg);
+        }
+
+        /* Adding a secondary shine for depth */
+        .container::after {
+          content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(to bottom right, rgba(255, 255, 255, 0.4) 0%, rgba(255, 255, 255, 0) 50%);
+            pointer-events: none;
+            opacity: 0.3; /* Adjust for more or less gloss */
+        }
     .logo-container {
     position: relative;
     top: 0;
