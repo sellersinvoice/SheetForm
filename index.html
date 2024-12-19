@@ -323,9 +323,9 @@
               <select type="text" id="popup-book-size" class="select-style">
                 <option value="" disabled selected>בחר גודל</option>
                 <option value="S">S</option>
-                <option value="S">M 17.5 ס"מ</option>
-                <option value="S">L</option>
-                <option value="S">XL</option>
+                <option value="M">M</option>
+                <option value="L">L</option>
+                <option value="XL">XL</option>
               </select>
 
               <select type="text" id="popup-book-nusach" class="select-style">
@@ -350,9 +350,9 @@
         <input type="text" id="popup-book-ingrave" class="select-style" placeholder="שם להטבעה">
         <select type="text" id="popup-book-ingrave-select" class="select-style">
           <option value="" disabled selected>בחר סוג הטבעה</option>
-          <option value="S">בלינד</option>
-          <option value="S">בלינד שקוע</option>
-          <option value="S">זהב</option>
+          <option value="בלינד">בלינד</option>
+          <option value="בלינד שקוע">בלינד שקוע</option>
+          <option value="זהב">זהב</option>
         </select>
         <textarea name="book-note" id="book-note" placeholder="הערה" class="select-style"></textarea>
       </div>
@@ -542,7 +542,8 @@
       size: book.size[0],
       nusach:book.nusach[0],
       bookNote:book.bookNote,
-      nameIngrave:book.ingrave[0,1],
+      nameIngrave:book.ingrave[0],
+      nameIngraveType:book.ingrave[1],
       styles: book.styles.map(style => ({
         color: style.color,
         style: style.style,
@@ -557,7 +558,7 @@
     };
 
     // Step 4: Send the data using URLSearchParams
-    let url = "https://script.google.com/macros/s/AKfycbzlYE7EexCVqWekHfd5PFQIvHbkgXsqw31QmK3zuPJAjBtKyp0yXv6WFOfcK1-AnblxQQ/exec";
+    let url = "https://script.google.com/macros/s/AKfycbzwjCDQo3uHX6bccElxRHyOZRilr5kyMuqqr9AIt94DMqIN1MUy1qAsY9pyHw7GXy6URQ/exec";
 
     try {
       const params = new URLSearchParams(data);
@@ -593,7 +594,7 @@
 
   </script>
   <script>
-    let webAppURL = "https://script.google.com/macros/s/AKfycbzlYE7EexCVqWekHfd5PFQIvHbkgXsqw31QmK3zuPJAjBtKyp0yXv6WFOfcK1-AnblxQQ/exec";
+    let webAppURL = "https://script.google.com/macros/s/AKfycbzwjCDQo3uHX6bccElxRHyOZRilr5kyMuqqr9AIt94DMqIN1MUy1qAsY9pyHw7GXy6URQ/exec";
 
 // Fetch data and display it in a table
  fetch(webAppURL)
