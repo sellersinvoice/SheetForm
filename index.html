@@ -504,6 +504,7 @@
         bookDiv.innerHTML = `
           <div class="order-details">
             <p><strong>${book.name}</strong><div style="display:flex;">${stylesText}</div></p>
+             <strong>שם להטבעה: </strong>${book.ingrave[0]}<strong>  סוג הטבעה: </strong>${book.ingrave[1]}<strong>   הערה: </strong>${book.bookNote}
           </div>
           <div class="buttons">
             <button onclick="openPopup(true, ${index})">ערוך</button>
