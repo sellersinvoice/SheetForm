@@ -4,6 +4,39 @@
   <link rel="icon" type="image/png" href="https://raw.githubusercontent.com/sellersinvoice/SheetForm/main/eyicon.png">
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <script type="module">
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
+  import {
+    getFirestore,
+    doc,
+    runTransaction
+  } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
+
+  const firebaseConfig = {
+    apiKey: "AIzaSyA8VhIFlBuduLwvwDEUY3lV5oIuQ71QAO0",
+    authDomain: "tasking-bfc1d.firebaseapp.com",
+    projectId: "tasking-bfc1d",
+    storageBucket: "tasking-bfc1d.firebasestorage.app",
+    messagingSenderId: "18244313186",
+    appId: "1:18244313186:web:3f260f9a29b6b63504b13b"
+  };
+
+  const app = initializeApp(firebaseConfig);
+  const db = getFirestore(app);
+
+  window.saveFactoryOrderToFirebase = async function(orderForFirebase) {
+    const ref = doc(db, "orders", "all");
+
+    await runTransaction(db, async transaction => {
+      const snap = await transaction.get(ref);
+      const currentList = snap.exists() ? (snap.data().list || []) : [];
+
+      transaction.set(ref, {
+        list: [orderForFirebase, ...currentList]
+      });
+    });
+  };
+</script>
   <title>Order Form</title>
   <style>
     body {
@@ -553,6 +586,39 @@
       })),
     }));
 
+    const firebaseOrder = {
+      orderId: `FORM-${Date.now()}`,
+      source: "form",
+      store: "Factory Form",
+      status: "pending",
+      date: new Date().toLocaleString("he-IL"),
+      createdAt: new Date().toISOString(),
+    
+      customer: customerDetails,
+    
+      items: order.flatMap(book =>
+        book.styles.map(style => ({
+          name: book.name,
+          size: book.size,
+          nusach: book.nusach,
+          bookNote: book.bookNote,
+          nameIngrave: book.nameIngrave,
+          nameIngraveType: book.nameIngraveType,
+          color: style.color,
+          style: style.style,
+          amount: style.amount,
+    
+          styles: [{
+            color: style.color,
+            style: style.style,
+            amount: style.amount
+          }]
+        }))
+      ),
+    
+      rawBooks: order
+    };
+
     // Step 3: Prepare the data for submission
     const data = {
       customer: JSON.stringify(customerDetails),
@@ -563,6 +629,7 @@
     let url = "https://script.google.com/macros/s/AKfycbxe0Whun-tkAx5N30wCiBS1EZG9ONqMiBszq12Wh80--tL1kLRlgcIrVywsL8dJQ3tqSQ/exec";
 
     try {
+      await window.saveFactoryOrderToFirebase(firebaseOrder);
       const params = new URLSearchParams(data);
 
       const response = await fetch(url, {
